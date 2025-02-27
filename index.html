@@ -6,93 +6,99 @@
     <title>نافذة من داخل إنسان</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1e1e2e;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
             color: #ffffff;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
         }
         header {
-            background-color: #ff6b6b;
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             top: 0;
             left: 0;
             z-index: 1000;
         }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #facc15;
+        }
         .profile-pic {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 2px solid white;
+            margin-right: auto; /* تحريك الصورة لليسار */
+            transition: transform 0.3s ease-in-out;
         }
-        .content {
-            padding: 100px 20px 20px;
+        .profile-pic:hover {
+            transform: scale(1.2);
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
             text-align: center;
             animation: fadeIn 2s ease-in-out;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #facc15;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .cta-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #facc15;
+            color: #0f172a;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #eab308;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .section {
-            background-color: #2e2e4f;
-            padding: 50px;
-            margin: 20px auto;
-            max-width: 800px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
-            transition: transform 0.3s;
-        }
-        .section:hover {
-            transform: scale(1.05);
-        }
-        .section img {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
         footer {
-            background-color: #ff6b6b;
-            color: white;
             text-align: center;
             padding: 20px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             margin-top: 50px;
         }
     </style>
 </head>
 <body>
     <header>
-        نافذة من داخل إنسان
+        <div class="logo">نافذة من داخل إنسان</div>
         <img src="https://github.com/mohamed14403/musalsalatpodcast/blob/main/%D8%B5%D9%88%D8%B1%D8%A9%20%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D8%A8%20%D8%A8%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%202024-11-23%20%D9%81%D9%8A%2020.22.39_9a10df1a.jpg?raw=true" alt="Profile Picture" class="profile-pic">
     </header>
-    <div class="content">
-        <div class="section">
-            <img src="https://source.unsplash.com/800x400/?mind,thoughts" alt="رحلة داخل النفس البشرية">
-            <h2>رحلة داخل النفس البشرية</h2>
-            <p>استكشاف المشاعر والأفكار العميقة التي تعبر عن تجربة الإنسان.</p>
-        </div>
-        <div class="section">
-            <img src="https://source.unsplash.com/800x400/?inspiration,stories" alt="القصص الملهمة">
-            <h2>القصص الملهمة</h2>
-            <p>قصص حقيقية وتحليلات فلسفية تلقي الضوء على الحياة اليومية.</p>
-        </div>
-        <div class="section">
-            <img src="https://source.unsplash.com/800x400/?window,life" alt="نافذة للحياة">
-            <h2>نافذة للحياة</h2>
-            <p>إلقاء نظرة على العالم من منظور شخصي وإنساني.</p>
-        </div>
+    <div class="hero">
+        <h1>اكتشف أعماق نفسك</h1>
+        <p>رحلة في أعماق الإنسان، حيث تتلاقى الأفكار والمشاعر في نافذة فريدة على الحياة.</p>
+        <button class="cta-button">ابدأ الآن</button>
     </div>
     <footer>
         &copy; 2025 جميع الحقوق محفوظة - نافذة من داخل إنسان
