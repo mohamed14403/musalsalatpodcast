@@ -3,44 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسلسلات بودكاست</title>
+    <title>نافذة من داخل إنسان</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         header {
             background-color: #333;
             color: white;
             padding: 20px;
             font-size: 24px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
-        section {
-            padding: 20px;
+        .content {
+            padding: 100px 20px 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section {
+            background-color: white;
+            padding: 50px;
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: scale(1.02);
         }
         footer {
             background-color: #333;
             color: white;
-            padding: 10px;
-            position: absolute;
-            width: 100%;
+            text-align: center;
+            padding: 20px;
+            position: relative;
             bottom: 0;
+            width: 100%;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
     <header>
-        مرحبًا بك في موقع مسلسلات بودكاست
+        نافذة من داخل إنسان
     </header>
-    <section>
-        <h2>استمتع بأحدث الأخبار والمراجعات عن المسلسلات</h2>
-        <p>هنا يمكنك العثور على مراجعات وتحليلات لأفضل المسلسلات الحديثة والقديمة.</p>
-    </section>
+    <div class="content">
+        <div class="section">
+            <h2>رحلة داخل النفس البشرية</h2>
+            <p>استكشاف المشاعر والأفكار العميقة التي تعبر عن تجربة الإنسان.</p>
+        </div>
+        <div class="section">
+            <h2>القصص الملهمة</h2>
+            <p>قصص حقيقية وتحليلات فلسفية تلقي الضوء على الحياة اليومية.</p>
+        </div>
+        <div class="section">
+            <h2>نافذة للحياة</h2>
+            <p>إلقاء نظرة على العالم من منظور شخصي وإنساني.</p>
+        </div>
+    </div>
     <footer>
-        &copy; 2025 جميع الحقوق محفوظة - مسلسلات بودكاست
+        &copy; 2025 جميع الحقوق محفوظة - نافذة من داخل إنسان
     </footer>
 </body>
 </html>
