@@ -81,15 +81,76 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* ستايل المشغل الصوتي */
         .audio-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #1a1b26;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-top: 50px;
         }
-        audio {
+
+        .audio-container h2 {
+            color: #facc15;
+            margin-bottom: 20px;
+        }
+
+        /* تصميم الشريط الصوتي */
+        .audio-player {
             width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
+            height: 8px;
+            background-color: #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
         }
+
+        .audio-player input[type="range"] {
+            width: 100%;
+            background-color: transparent;
+            appearance: none;
+            outline: none;
+            height: 8px;
+            border-radius: 5px;
+        }
+
+        .audio-player input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #facc15;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .audio-player input[type="range"]:active::-webkit-slider-thumb {
+            background-color: #eab308;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #facc15;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .audio-controls button:hover {
+            color: #eab308;
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -109,17 +170,58 @@
         <p>رحلة في أعماق الإنسان، حيث تتلاقى الأفكار والمشاعر في نافذة فريدة على الحياة.</p>
         <button class="cta-button">ابدأ الآن</button>
     </div>
-    
+
+    <!-- مشغل الصوت المحسن -->
     <div class="audio-container">
         <h2>استمع إلى الحلقة</h2>
-        <audio controls>
+        <audio id="audio" preload="auto">
             <source src="https://www.dropbox.com/scl/fi/0za8lhlvnxcjyg3nrabjh/5jQI7.mp3?rlkey=tt1bp2rdtxllt7r31hqqsj649&st=kdsxk6h8&dl=1" type="audio/mp3">
             متصفحك لا يدعم تشغيل الصوت.
         </audio>
+
+        <!-- شريط التمرير -->
+        <div class="audio-player">
+            <input type="range" id="audioProgress" value="0" step="1">
+        </div>
+
+        <!-- أزرار التحكم في الصوت -->
+        <div class="audio-controls">
+            <button id="playPauseBtn">▶️</button>
+            <button>⏭️</button>
+        </div>
     </div>
-    
+
     <footer>
         &copy; 2025 جميع الحقوق محفوظة - نافذة من داخل إنسان
     </footer>
+
+    <script>
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const audio = document.getElementById('audio');
+        const audioProgress = document.getElementById('audioProgress');
+
+        // التبديل بين التشغيل والتوقف
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.textContent = '⏸️';
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = '▶️';
+            }
+        });
+
+        // تحديث شريط التمرير عند تغيير التقدم
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            audioProgress.value = progress;
+        });
+
+        // تغيير التقدم عند التفاعل مع شريط التمرير
+        audioProgress.addEventListener('input', () => {
+            const seekTime = (audioProgress.value / 100) * audio.duration;
+            audio.currentTime = seekTime;
+        });
+    </script>
 </body>
 </html>
