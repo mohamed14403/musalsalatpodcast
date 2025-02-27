@@ -7,13 +7,14 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #1e1e2e;
+            color: #ffffff;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
         }
         header {
-            background-color: #333;
+            background-color: #ff6b6b;
             color: white;
             padding: 20px;
             font-size: 24px;
@@ -34,19 +35,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .section {
-            background-color: white;
+            background-color: #2e2e4f;
             padding: 50px;
             margin: 20px auto;
             max-width: 800px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
             transition: transform 0.3s;
         }
         .section:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+        }
+        .section img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
         footer {
-            background-color: #333;
+            background-color: #ff6b6b;
             color: white;
             text-align: center;
             padding: 20px;
@@ -63,14 +69,17 @@
     </header>
     <div class="content">
         <div class="section">
+            <img src="https://source.unsplash.com/800x400/?mind,thoughts" alt="رحلة داخل النفس البشرية">
             <h2>رحلة داخل النفس البشرية</h2>
             <p>استكشاف المشاعر والأفكار العميقة التي تعبر عن تجربة الإنسان.</p>
         </div>
         <div class="section">
+            <img src="https://source.unsplash.com/800x400/?inspiration,stories" alt="القصص الملهمة">
             <h2>القصص الملهمة</h2>
             <p>قصص حقيقية وتحليلات فلسفية تلقي الضوء على الحياة اليومية.</p>
         </div>
         <div class="section">
+            <img src="https://source.unsplash.com/800x400/?window,life" alt="نافذة للحياة">
             <h2>نافذة للحياة</h2>
             <p>إلقاء نظرة على العالم من منظور شخصي وإنساني.</p>
         </div>
