@@ -1,157 +1,107 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسلسلات من تأليفي</title>
+    <title>مسلسلات من تأليفي | حيث تبدأ الحكايات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&display=swap');
         body {
             font-family: 'Cairo', sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1a1a1a, #222);
-            color: white;
-            text-align: center;
-            overflow-x: hidden;
         }
-        .banner {
-            background: url('banner.jpg') no-repeat center center/cover;
-            padding: 120px;
-            font-size: 40px;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            animation: fadeIn 2s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .header {
-            padding: 20px;
-            background: #1DB954;
+        header {
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            padding: 15px;
             font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
-        .content {
-            padding: 20px;
-            font-size: 20px;
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
-        .section {
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        }
-        .section h2 {
-            color: #1DB954;
-        }
-        .floating-menu {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.6);
+        .folder, .episode {
+            background: linear-gradient(135deg, #1e1e1e, #292929);
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        }
-        .floating-menu a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
+            box-shadow: 0 4px 10px rgba(255, 138, 0, 0.4);
+            width: 100%;
+            max-width: 150px;
+            text-align: center;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
-        .footer {
-            margin-top: 50px;
-            padding: 20px;
-            background: #111;
-            font-size: 16px;
-        }
-        .tab-content {
-            display: none;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
+        .folder img, .episode img {
+            width: 100%;
+            height: auto;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .active {
             display: block;
-            opacity: 1;
         }
-        .hidden {
+        .folder:hover, .episode:hover {
+            background: linear-gradient(135deg, #292929, #1e1e1e);
+        }
+        .episodes {
             display: none;
-        }
-        .error {
-            color: red;
+            margin-top: 10px;
         }
     </style>
     <script>
-        function openTab(tabId) {
-            var tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                setTimeout(() => tab.style.display = 'none', 800);
-            });
-            setTimeout(() => {
-                document.getElementById(tabId).style.display = 'block';
-                setTimeout(() => document.getElementById(tabId).classList.add('active'), 10);
-            }, 800);
-        }
-        function login() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            if (email === "medo14403@yahoo.com" && password === "M####edo&&&&14403") {
-                document.getElementById("login-form").style.display = "none";
-                document.getElementById("upload-section").style.display = "block";
-            } else {
-                document.getElementById("error-message").innerText = "الدخول للمالك فقط!";
+        function toggleEpisodes(id) {
+            var episodes = document.getElementById(id);
+            if (episodes) {
+                if (episodes.style.display === "none" || episodes.style.display === "") {
+                    episodes.style.display = "block";
+                } else {
+                    episodes.style.display = "none";
+                }
             }
         }
     </script>
 </head>
 <body>
-    <div class="header">مسلسلات من تأليفي - نافذة من داخل إنسان</div>
-    <div class="banner">حيث تبدأ الحكايات</div>
-    <div class="floating-menu">
-        <a onclick="openTab('home')">الرئيسية</a>
-        <a onclick="openTab('episodes')">الحلقات</a>
-        <a onclick="openTab('dashboard')">لوحة التحكم</a>
-    </div>
-    <div class="content">
-        <div id="home" class="tab-content active">
-            <div class="section">
-                <h2>اكتشف عوالم جديدة</h2>
-                <p>كل مسلسل هو قصة فريدة، عالم مليء بالإثارة والتشويق، تابع أحدث الحلقات الآن!</p>
-            </div>
+    <header>مسلسلات من تأليفي | حيث تبدأ الحكايات</header>
+    <div class="container">
+        <div class="folder" onclick="toggleEpisodes('episodes1')">
+            <img src="https://www.dropbox.com/scl/fi/4b589vqazjqadxk350b6f/2025-02-28-22.28.49_0a0702d6.jpg?rlkey=h5pv6bmzn86hvkltn0h6fbcgi&st=wu0kofc3&raw=1" alt="غلاف مسلسل المظلوم">
+            <h3>مسلسل المظلوم</h3>
         </div>
-        <div id="episodes" class="tab-content">
-            <div class="section">
-                <h2>حلقات جديدة أسبوعياً</h2>
-                <p>لا تفوت أي حلقة! تابع معنا لنأخذك في رحلة مشوقة مع شخصيات وأحداث غير متوقعة.</p>
-            </div>
-        </div>
-        <div id="dashboard" class="tab-content">
-            <div id="login-form">
-                <h2>تسجيل الدخول</h2>
-                <input type="email" id="email" placeholder="البريد الإلكتروني"><br><br>
-                <input type="password" id="password" placeholder="كلمة المرور"><br><br>
-                <button onclick="login()">تسجيل الدخول</button>
-                <p id="error-message" class="error"></p>
-            </div>
-            <div id="upload-section" class="hidden">
-                <h2>رفع ملف MP3</h2>
-                <input type="file" id="file" accept="audio/mp3"><br><br>
-                <textarea id="description" placeholder="أدخل وصف الملف"></textarea><br><br>
-                <button>رفع الملف</button>
-            </div>
+        <div class="folder" onclick="toggleEpisodes('episodes2')">
+            <img src="https://www.dropbox.com/scl/fi/ci4x0g8wq77qh81wwaby6/2025-02-28-22.38.48_674a2a20.jpg?rlkey=b1pzxkhu7foov29golaeh2v27&st=m8egu4q5&raw=1" alt="غلاف مسلسل التواضع والحكمة">
+            <h3>مسلسل التواضع والحكمة</h3>
         </div>
     </div>
-    <div class="footer">&copy; 2025 جميع الحقوق محفوظة</div>
+    <div id="episodes1" class="episodes">
+        <div class="episode">
+            <img src="https://www.dropbox.com/scl/fi/4b589vqazjqadxk350b6f/2025-02-28-22.28.49_0a0702d6.jpg?rlkey=h5pv6bmzn86hvkltn0h6fbcgi&st=wu0kofc3&raw=1" alt="الحلقة الأولى" style="width:100%; border-radius: 8px;">
+            <h4>الحلقة الأولى</h4>
+            <audio controls style="width: 100%; margin-top: 5px;">
+                <source src="https://www.dropbox.com/scl/fi/hfj1z64zfgor12kaf3zpn/.mp3?rlkey=2mweyzo28dcvrpxgcekk26sho&st=3dj1an16&raw=1" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+    </div>
+    <div id="episodes2" class="episodes">
+        <div class="episode">
+            <img src="https://www.dropbox.com/scl/fi/ci4x0g8wq77qh81wwaby6/2025-02-28-22.38.48_674a2a20.jpg?rlkey=b1pzxkhu7foov29golaeh2v27&st=m8egu4q5&raw=1" alt="الحلقة الأولى" style="width:100%; border-radius: 8px;">
+            <h4>الحلقة الأولى</h4>
+            <audio controls style="width: 100%; margin-top: 5px;">
+                <source src="https://www.dropbox.com/scl/fi/3jskdz7yc7yrhxtem99v5/1.mp3?rlkey=i5x38oa1css0e7fyaf0qnkmw8&st=hba0ehsf&raw=1" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+    </div>
 </body>
 </html>
