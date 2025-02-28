@@ -1,227 +1,113 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نافذة من داخل إنسان</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0f172a;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #facc15;
-        }
-        .profile-pic {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid white;
-            margin-right: auto;
-            transition: transform 0.3s ease-in-out;
-        }
-        .profile-pic:hover {
-            transform: scale(1.2);
-        }
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            animation: fadeIn 2s ease-in-out;
-        }
-        .hero h1 {
-            font-size: 48px;
-            font-weight: bold;
-            color: #facc15;
-            margin-bottom: 10px;
-        }
-        .hero p {
-            font-size: 18px;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-        .cta-button {
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #facc15;
-            color: #0f172a;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .cta-button:hover {
-            background-color: #eab308;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+import React, { useState } from "react";
+import { FaHome, FaSearch, FaMusic, FaCog, FaTrash } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-        /* ستايل المشغل الصوتي */
-        .audio-container {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #1a1b26;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+const validEmail = "medo14403@yahoo.com";
+const validPassword = "M####edo&&&&14403";
 
-        .audio-container h2 {
-            color: #facc15;
-            margin-bottom: 20px;
-        }
+const Banner = () => (
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }} 
+    animate={{ opacity: 1, scale: 1 }} 
+    transition={{ duration: 1 }}
+    className="w-full h-64 bg-gradient-to-r from-purple-700 to-indigo-900 flex flex-col items-center justify-center text-white text-5xl font-extrabold shadow-xl relative overflow-hidden"
+  >
+    <motion.span initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8 }} className="z-10">
+      🎭 مسلسلات من تأليفي - حيث تبدأ الحكايات
+    </motion.span>
+    <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} className="text-xl font-light mt-2 text-gray-200 z-10">
+      نافذة من داخل إنسان
+    </motion.span>
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50"></div>
+  </motion.div>
+);
 
-        /* تصميم الشريط الصوتي */
-        .audio-player {
-            width: 100%;
-            height: 8px;
-            background-color: #333;
-            border-radius: 5px;
-            margin: 20px 0;
-            position: relative;
-        }
+const Sidebar = ({ setPage }) => (
+  <motion.div initial={{ x: -200 }} animate={{ x: 0 }} transition={{ duration: 0.5 }} className="w-64 h-screen bg-gradient-to-b from-black to-gray-900 text-gray-300 p-4 flex flex-col shadow-lg">
+    <h1 className="text-white text-2xl font-extrabold mb-6 tracking-wide">🎬 مسلسلات من تأليفي</h1>
+    <nav className="space-y-4">
+      <button onClick={() => setPage("home")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaHome /> <span>الرئيسية</span></button>
+      <button onClick={() => setPage("search")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaSearch /> <span>بحث</span></button>
+      <button onClick={() => setPage("library")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaMusic /> <span>مكتبتك</span></button>
+      <button onClick={() => setPage("admin")} className="flex items-center space-x-2 text-white hover:text-red-500"><FaCog /> <span>لوحة التحكم</span></button>
+    </nav>
+  </motion.div>
+);
 
-        .audio-player input[type="range"] {
-            width: 100%;
-            background-color: transparent;
-            appearance: none;
-            outline: none;
-            height: 8px;
-            border-radius: 5px;
-        }
+const Dashboard = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [uploads, setUploads] = useState([]);
+  
+  const handleLogin = () => {
+    if (email === validEmail && password === validPassword) {
+      setIsAuthenticated(true);
+    } else {
+      alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+    }
+  };
 
-        .audio-player input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            background: #facc15;
-            border-radius: 50%;
-            cursor: pointer;
-        }
+  const handleUpload = (e) => {
+    e.preventDefault();
+    const newUpload = {
+      id: Date.now(),
+      name: e.target.audio.files[0]?.name,
+      description: e.target.description.value,
+    };
+    setUploads([...uploads, newUpload]);
+    e.target.reset();
+  };
 
-        .audio-player input[type="range"]:active::-webkit-slider-thumb {
-            background-color: #eab308;
-        }
+  const handleDelete = (id) => {
+    setUploads(uploads.filter(upload => upload.id !== id));
+  };
 
-        .audio-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            align-items: center;
-        }
+  if (!isAuthenticated) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white">
+        <h2 className="text-3xl font-bold mb-6">تسجيل الدخول</h2>
+        <input type="email" placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} className="p-3 rounded-lg text-black mb-4 w-80" />
+        <input type="password" placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} className="p-3 rounded-lg text-black mb-4 w-80" />
+        <button onClick={handleLogin} className="bg-green-500 px-6 py-2 rounded-lg text-white font-bold hover:bg-green-700 transition">تسجيل الدخول</button>
+      </div>
+    );
+  }
 
-        .audio-controls button {
-            background: none;
-            border: none;
-            color: #facc15;
-            font-size: 24px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .audio-controls button:hover {
-            color: #eab308;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            margin-top: 50px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo">نافذة من داخل إنسان</div>
-        <img src="https://www.dropbox.com/scl/fi/du8lxy8is8py27jpwr0jz/2024-11-23-20.22.39_9a10df1a.jpg?rlkey=td2ed234qkzmaorr3elrargug&st=nudswihe&dl=1" alt="Profile Picture" class="profile-pic">
-    </header>
-    <div class="hero">
-        <h1>اكتشف أعماق نفسك</h1>
-        <p>رحلة في أعماق الإنسان، حيث تتلاقى الأفكار والمشاعر في نافذة فريدة على الحياة.</p>
-        <button class="cta-button">ابدأ الآن</button>
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white">
+      <h2 className="text-3xl font-bold mb-6">إدارة ملفات MP3</h2>
+      <form onSubmit={handleUpload} className="flex flex-col items-center">
+        <input type="file" name="audio" accept="audio/mp3" className="p-3 rounded-lg text-black mb-4 w-80" />
+        <textarea name="description" placeholder="وصف الصوت" className="p-3 rounded-lg text-black mb-4 w-80 h-24"></textarea>
+        <button type="submit" className="bg-blue-500 px-6 py-2 rounded-lg text-white font-bold hover:bg-blue-700 transition">رفع الملف</button>
+      </form>
+      <ul className="mt-6 w-80">
+        {uploads.map(upload => (
+          <li key={upload.id} className="flex justify-between bg-gray-700 p-3 rounded-lg mb-2">
+            <span>{upload.name}</span>
+            <button onClick={() => handleDelete(upload.id)} className="text-red-500 hover:text-red-700"><FaTrash /></button>
+          </li>
+        ))}
+      </ul>
     </div>
+  );
+};
 
-    <!-- مشغل الصوت المحسن -->
-    <div class="audio-container">
-        <h2>استمع إلى الحلقة</h2>
-        <audio id="audio" preload="auto">
-            <source src="https://www.dropbox.com/scl/fi/0za8lhlvnxcjyg3nrabjh/5jQI7.mp3?rlkey=tt1bp2rdtxllt7r31hqqsj649&st=kdsxk6h8&dl=1" type="audio/mp3">
-            متصفحك لا يدعم تشغيل الصوت.
-        </audio>
-
-        <!-- شريط التمرير -->
-        <div class="audio-player">
-            <input type="range" id="audioProgress" value="0" step="1">
+const Home = () => {
+  const [page, setPage] = useState("home");
+  return (
+    <div className="flex flex-col bg-gray-800 min-h-screen text-white">
+      {page !== "admin" && <Banner />}
+      <div className="flex flex-1">
+        <Sidebar setPage={setPage} />
+        <div className="flex-1 p-6">
+          {page === "home" && <h2 className="text-4xl font-extrabold text-green-400">🔥 الصفحة الرئيسية</h2>}
+          {page === "admin" && <Dashboard />}
         </div>
-
-        <!-- أزرار التحكم في الصوت -->
-        <div class="audio-controls">
-            <button id="playPauseBtn">▶️</button>
-            <button>⏭️</button>
-        </div>
+      </div>
     </div>
+  );
+};
 
-    <footer>
-        &copy; 2025 جميع الحقوق محفوظة - نافذة من داخل إنسان
-    </footer>
-
-    <script>
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const audio = document.getElementById('audio');
-        const audioProgress = document.getElementById('audioProgress');
-
-        // التبديل بين التشغيل والتوقف
-        playPauseBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                playPauseBtn.textContent = '⏸️';
-            } else {
-                audio.pause();
-                playPauseBtn.textContent = '▶️';
-            }
-        });
-
-        // تحديث شريط التمرير عند تغيير التقدم
-        audio.addEventListener('timeupdate', () => {
-            const progress = (audio.currentTime / audio.duration) * 100;
-            audioProgress.value = progress;
-        });
-
-        // تغيير التقدم عند التفاعل مع شريط التمرير
-        audioProgress.addEventListener('input', () => {
-            const seekTime = (audioProgress.value / 100) * audio.duration;
-            audio.currentTime = seekTime;
-        });
-    </script>
-</body>
-</html>
+export default Home;
