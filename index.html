@@ -1,113 +1,157 @@
-import React, { useState } from "react";
-import { FaHome, FaSearch, FaMusic, FaCog, FaTrash } from "react-icons/fa";
-import { motion } from "framer-motion";
-
-const validEmail = "medo14403@yahoo.com";
-const validPassword = "M####edo&&&&14403";
-
-const Banner = () => (
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }} 
-    animate={{ opacity: 1, scale: 1 }} 
-    transition={{ duration: 1 }}
-    className="w-full h-64 bg-gradient-to-r from-purple-700 to-indigo-900 flex flex-col items-center justify-center text-white text-5xl font-extrabold shadow-xl relative overflow-hidden"
-  >
-    <motion.span initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8 }} className="z-10">
-      🎭 مسلسلات من تأليفي - حيث تبدأ الحكايات
-    </motion.span>
-    <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} className="text-xl font-light mt-2 text-gray-200 z-10">
-      نافذة من داخل إنسان
-    </motion.span>
-    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50"></div>
-  </motion.div>
-);
-
-const Sidebar = ({ setPage }) => (
-  <motion.div initial={{ x: -200 }} animate={{ x: 0 }} transition={{ duration: 0.5 }} className="w-64 h-screen bg-gradient-to-b from-black to-gray-900 text-gray-300 p-4 flex flex-col shadow-lg">
-    <h1 className="text-white text-2xl font-extrabold mb-6 tracking-wide">🎬 مسلسلات من تأليفي</h1>
-    <nav className="space-y-4">
-      <button onClick={() => setPage("home")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaHome /> <span>الرئيسية</span></button>
-      <button onClick={() => setPage("search")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaSearch /> <span>بحث</span></button>
-      <button onClick={() => setPage("library")} className="flex items-center space-x-2 text-white hover:text-green-500"><FaMusic /> <span>مكتبتك</span></button>
-      <button onClick={() => setPage("admin")} className="flex items-center space-x-2 text-white hover:text-red-500"><FaCog /> <span>لوحة التحكم</span></button>
-    </nav>
-  </motion.div>
-);
-
-const Dashboard = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [uploads, setUploads] = useState([]);
-  
-  const handleLogin = () => {
-    if (email === validEmail && password === validPassword) {
-      setIsAuthenticated(true);
-    } else {
-      alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
-    }
-  };
-
-  const handleUpload = (e) => {
-    e.preventDefault();
-    const newUpload = {
-      id: Date.now(),
-      name: e.target.audio.files[0]?.name,
-      description: e.target.description.value,
-    };
-    setUploads([...uploads, newUpload]);
-    e.target.reset();
-  };
-
-  const handleDelete = (id) => {
-    setUploads(uploads.filter(upload => upload.id !== id));
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white">
-        <h2 className="text-3xl font-bold mb-6">تسجيل الدخول</h2>
-        <input type="email" placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} className="p-3 rounded-lg text-black mb-4 w-80" />
-        <input type="password" placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} className="p-3 rounded-lg text-black mb-4 w-80" />
-        <button onClick={handleLogin} className="bg-green-500 px-6 py-2 rounded-lg text-white font-bold hover:bg-green-700 transition">تسجيل الدخول</button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white">
-      <h2 className="text-3xl font-bold mb-6">إدارة ملفات MP3</h2>
-      <form onSubmit={handleUpload} className="flex flex-col items-center">
-        <input type="file" name="audio" accept="audio/mp3" className="p-3 rounded-lg text-black mb-4 w-80" />
-        <textarea name="description" placeholder="وصف الصوت" className="p-3 rounded-lg text-black mb-4 w-80 h-24"></textarea>
-        <button type="submit" className="bg-blue-500 px-6 py-2 rounded-lg text-white font-bold hover:bg-blue-700 transition">رفع الملف</button>
-      </form>
-      <ul className="mt-6 w-80">
-        {uploads.map(upload => (
-          <li key={upload.id} className="flex justify-between bg-gray-700 p-3 rounded-lg mb-2">
-            <span>{upload.name}</span>
-            <button onClick={() => handleDelete(upload.id)} className="text-red-500 hover:text-red-700"><FaTrash /></button>
-          </li>
-        ))}
-      </ul>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسلسلات من تأليفي</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a1a, #222);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .banner {
+            background: url('banner.jpg') no-repeat center center/cover;
+            padding: 120px;
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .header {
+            padding: 20px;
+            background: #1DB954;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .content {
+            padding: 20px;
+            font-size: 20px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+        .section h2 {
+            color: #1DB954;
+        }
+        .floating-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        }
+        .floating-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #111;
+            font-size: 16px;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .active {
+            display: block;
+            opacity: 1;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        function openTab(tabId) {
+            var tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                setTimeout(() => tab.style.display = 'none', 800);
+            });
+            setTimeout(() => {
+                document.getElementById(tabId).style.display = 'block';
+                setTimeout(() => document.getElementById(tabId).classList.add('active'), 10);
+            }, 800);
+        }
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            if (email === "medo14403@yahoo.com" && password === "M####edo&&&&14403") {
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("upload-section").style.display = "block";
+            } else {
+                document.getElementById("error-message").innerText = "الدخول للمالك فقط!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">مسلسلات من تأليفي - نافذة من داخل إنسان</div>
+    <div class="banner">حيث تبدأ الحكايات</div>
+    <div class="floating-menu">
+        <a onclick="openTab('home')">الرئيسية</a>
+        <a onclick="openTab('episodes')">الحلقات</a>
+        <a onclick="openTab('dashboard')">لوحة التحكم</a>
     </div>
-  );
-};
-
-const Home = () => {
-  const [page, setPage] = useState("home");
-  return (
-    <div className="flex flex-col bg-gray-800 min-h-screen text-white">
-      {page !== "admin" && <Banner />}
-      <div className="flex flex-1">
-        <Sidebar setPage={setPage} />
-        <div className="flex-1 p-6">
-          {page === "home" && <h2 className="text-4xl font-extrabold text-green-400">🔥 الصفحة الرئيسية</h2>}
-          {page === "admin" && <Dashboard />}
+    <div class="content">
+        <div id="home" class="tab-content active">
+            <div class="section">
+                <h2>اكتشف عوالم جديدة</h2>
+                <p>كل مسلسل هو قصة فريدة، عالم مليء بالإثارة والتشويق، تابع أحدث الحلقات الآن!</p>
+            </div>
         </div>
-      </div>
+        <div id="episodes" class="tab-content">
+            <div class="section">
+                <h2>حلقات جديدة أسبوعياً</h2>
+                <p>لا تفوت أي حلقة! تابع معنا لنأخذك في رحلة مشوقة مع شخصيات وأحداث غير متوقعة.</p>
+            </div>
+        </div>
+        <div id="dashboard" class="tab-content">
+            <div id="login-form">
+                <h2>تسجيل الدخول</h2>
+                <input type="email" id="email" placeholder="البريد الإلكتروني"><br><br>
+                <input type="password" id="password" placeholder="كلمة المرور"><br><br>
+                <button onclick="login()">تسجيل الدخول</button>
+                <p id="error-message" class="error"></p>
+            </div>
+            <div id="upload-section" class="hidden">
+                <h2>رفع ملف MP3</h2>
+                <input type="file" id="file" accept="audio/mp3"><br><br>
+                <textarea id="description" placeholder="أدخل وصف الملف"></textarea><br><br>
+                <button>رفع الملف</button>
+            </div>
+        </div>
     </div>
-  );
-};
-
-export default Home;
+    <div class="footer">&copy; 2025 جميع الحقوق محفوظة</div>
+</body>
+</html>
